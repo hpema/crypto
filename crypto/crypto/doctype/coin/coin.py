@@ -58,6 +58,7 @@ def update_coins_rate():
                     coin.usd_price = 0
                     coin.zar_price = 0
                 coin.save()
+                wallet.zar = coin.zar_price
 
             for line in wallet.transactions:
                 line.profit_or_loss=0
