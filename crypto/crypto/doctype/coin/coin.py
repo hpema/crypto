@@ -49,7 +49,7 @@ def update_coins_rate():
             exists.zar_price = 0
         exists.save()
 
-    	last_run.last_polled=frappe.utils.now()
+        last_run.last_polled=frappe.utils.now()
         last_run.save()
         frappe.db.commit()
 
@@ -57,18 +57,18 @@ def update_coins_rate():
     for w in wallets:
         wallet = frappe.get_doc('Wallet', w['name'])
         wallet.profit_or_loss = 0
-		wallet.total = 0
-		wallet.total_coins = 0
-		wallet.user = wallet.owner
-		for line in wallet.transactions:
-			line.profit_or_loss=0
-			wallet.total_coins = wallet.total_coins + line.quantity
-			coin = frappe.get_doc('Coin', line.coin)
-			if coin:
-				wallet.total = wallet.total + line.spent
-				if line.quantity >0:
-					line.profit_or_loss = (coin.zar_price*line.quantity) - line.spent
-				wallet.profit_or_loss = wallet.profit_or_loss + line.profit_or_loss
+        wallet.total = 0
+        wallet.total_coins = 0
+        wallet.user = wallet.owner
+        for line in wallet.transactions:
+            line.profit_or_loss=0
+            wallet.total_coins = wallet.total_coins + line.quantity
+            coin = frappe.get_doc('Coin', line.coin)
+            if coin:
+                wallet.total = wallet.total + line.spent
+                if line.quantity >0:
+                   line.profit_or_loss = (coin.zar_price*line.quantity) - line.spent
+                wallet.profit_or_loss = wallet.profit_or_loss + line.profit_or_loss
             line.save()
         wallet.save()
         frappe.db.commit()
