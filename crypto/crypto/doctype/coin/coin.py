@@ -53,7 +53,7 @@ def update_coins_rate():
                 #return r["USD"]
                 try:
                     coin.usd_price = r["USD"]
-                    coin.zar_price = r["ZAR"]
+                    coin.zar_price = r["ZAR"]*0.9
                 except:
                     coin.usd_price = 0
                     coin.zar_price = 0
@@ -65,7 +65,7 @@ def update_coins_rate():
                 wallet.total_coins = wallet.total_coins + line.quantity
                 wallet.total = wallet.total + line.spent
                 if line.quantity >0:
-                    line.profit_or_loss = (coin.zar_price*line.quantity) - line.spent
+                    line.profit_or_loss = (wallet.zar*line.quantity) - line.spent
                 wallet.profit_or_loss = wallet.profit_or_loss + line.profit_or_loss
                 line.save()
             wallet.save()
