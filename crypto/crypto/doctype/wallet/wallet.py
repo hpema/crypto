@@ -11,7 +11,7 @@ class Wallet(Document):
 		self.profit_or_loss = 0
 		self.total = 0
 		self.total_coins = 0
-		
+		self.user = self.owner
 		for line in self.transactions:
 			line.profit_or_loss=0
 			self.total_coins = self.total_coins + line.quantity
