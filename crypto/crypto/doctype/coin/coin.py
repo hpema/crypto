@@ -13,7 +13,7 @@ class Coin(Document):
 @frappe.whitelist()
 def update_coins_rate():
     last_run = frappe.get_doc('Coin API')
-    if frappe.utils.time_diff_in_seconds(frappe.utils.now(),last_run.last_polled)>60:
+    if frappe.utils.time_diff_in_seconds(frappe.utils.now(),last_run.last_polled)>600:
         api_url = "https://api.coinmarketcap.com/v1/ticker/?convert=ZAR"
         response = requests.get(api_url)
         for coin in json.loads(response.text):
@@ -56,5 +56,7 @@ def update_coins_rate():
     	last_run.last_polled=frappe.utils.now()
         last_run.save()
         frappe.db.commit()
+
+        
 
     return last_run.last_polled
